@@ -2,10 +2,13 @@ FROM java:8-jdk
 
 MAINTAINER Pete Cornish <outofcoffee@gmail.com>
 
+WORKDIR /build
+ADD . ./
+RUN ./gradlew installDist
+
 RUN mkdir -p /opt/corebot /opt/corebot/config
 
-ADD bot/build/install/bot /opt/corebot
+RUN mv bot/build/install/bot /opt/corebot
 
-WORKDIR "/opt/corebot"
+CMD ["/opt/corebot/bot/bin/bot"]
 
-ENTRYPOINT [ "./bin/bot" ]
